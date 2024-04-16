@@ -17,7 +17,7 @@ from slugify import slugify
 logger = logging.getLogger(__name__)
 
 
-class GenericBlobDataset:
+class HDXSignals:
     def __init__(self, configuration, retriever, folder, errors):
         self.configuration = configuration
         self.retriever = retriever
@@ -33,10 +33,11 @@ class GenericBlobDataset:
         # TODO: move to get this key separately
         key = self.configuration["key"]
         blob = self.configuration["blob"]
-        dataset_name = self.configuration["dataset_names"]["AZURE-BLOB-TEST"]
+        url = self.configuration["url"]
+        dataset_name = self.configuration["dataset_names"]["HDX-SIGNALS"]
 
         downloaded_file = self.retriever.download_file(
-            url="test",
+            url=url,
             account=account,
             container=container,
             key=key,
@@ -56,7 +57,7 @@ class GenericBlobDataset:
     def generate_dataset(self, dataset_name):
 
         # Setting metadata and configurations
-        name = self.configuration["dataset_names"]["AZURE-BLOB-TEST"]
+        name = self.configuration["dataset_names"]["HDX-SIGNALS"]
         title = self.configuration["title"]
         update_frequency = self.configuration["update_frequency"]
         dataset = Dataset({"name": slugify(name), "title": title})

@@ -1,21 +1,26 @@
 # Collector specific configuration
 #TODO add details below to github secrets
+url: "test"
 account: "storage-account"
 container: "container-name"
 blob: "filename.csv"
 key: "accesskey=="
 
 dataset_names:
-  AZURE-BLOB-TEST: "azure-blob-upload-test"
+  HDX-SIGNALS: "hdx-signals"
 
 allowed_tags:
-  - "climate hazards"
+  - "food security"
+  - "conflict-violence"
+  - "markets"
+  - "drought"
+  - "displacement"
 
 # Metadata
 start_date: "2016-10-01"
-title: "Azure Blob Test Dataset"
+title: "HDX Signals"
 update_frequency: "monthly"
 maintainer_id: "2f9fd160-2a16-49c0-89d6-0bc3230599bf"
-organization_id: "75b74751-1b97-4cde-939b-1e4fb083c85c"
+organization_id: "hdx"
 description: "test Description"
 notes: "test notes"

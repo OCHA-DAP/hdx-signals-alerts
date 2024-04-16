@@ -20,12 +20,12 @@ from datetime import datetime
 import hmac
 import hashlib
 import base64
-from genericpipeline import GenericBlobDataset
+from hdx_signals import HDXSignals
 
 logger = logging.getLogger(__name__)
 
-lookup = "azure-blob-upload-test"
-updated_by_script = "HDX Scraper: Azure Blob Test"
+lookup = "hdx-signals"
+updated_by_script = "HDX Scraper: HDX Signals"
 
 
 class AzureBlobDownload(Download):
@@ -149,7 +149,7 @@ def main(save: bool = False, use_saved: bool = False) -> None:
                     folder = info["folder"]
                     batch = info["batch"]
                     configuration = Configuration.read()
-                    iris = GenericBlobDataset(configuration, retriever, folder, errors)
+                    iris = HDXSignals(configuration, retriever, folder, errors)
                     dataset_names = iris.get_data(state_dict)
                     logger.info(f"Number of datasets to upload: {len(dataset_names)}")
 
