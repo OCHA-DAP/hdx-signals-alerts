@@ -1,5 +1,5 @@
 license_id: "cc-by-igo"
-methodology: "methodology TBD"
-dataset_source: "OCHA"
+methodology: "Read details of the methodology [here](https://eur02.safelinks.protection.outlook.com/?url=https%3A%2F%2Fgithub.com%2FOCHA-DAP%2Fhdx-signals&data=05%7C02%7Cisabelle.tot%40un.org%7Cef19ac36eb2446def80508dc7a4cb394%7C0f9e35db544f4f60bdcc5ea416e6dc70%7C0%7C0%7C638519717049790832%7CUnknown%7CTWFpbGZsb3d8eyJWIjoiMC4wLjAwMDAiLCJQIjoiV2luMzIiLCJBTiI6Ik1haWwiLCJXVCI6Mn0%3D%7C0%7C%7C%7C&sdata=aNvklZHs3U2rkoSmTPwq4eZk%2BSg%2Bj4%2FmWq25eXoytEA%3D&reserved=0)."
+dataset_source: "HDX"
 package_creator: "isabelle-tot"
 private: False
