@@ -8,6 +8,7 @@ TODO
 
 """
 import logging
+import os
 from datetime import datetime
 import pandas as pd
 from hdx.data.dataset import Dataset
@@ -31,13 +32,22 @@ class HDXSignals:
         self.latest_date = None
 
     def get_data(self, state):
-        account = self.configuration["account"]
-        container = self.configuration["container"]
-        key = self.configuration["key"]
-        blob_dir = self.configuration["blob_dir"]
+
+        try:
+            url = os.environ["BLOB_URL"]
+            account = os.environ["STORAGE_ACCOUNT"]
+            container = os.environ["CONTAINER"]
+            key = os.environ["KEY"]
+            blob_dir = os.environ["BLOB_DIR"]
+        except Exception:
+            url = self.configuration["url"]
+            account = self.configuration["account"]
+            container = self.configuration["container"]
+            key = self.configuration["key"]
+            blob_dir = self.configuration["blob_dir"]
+
         alerts_filename = self.configuration["alerts_filename"]
         locations_filename = self.configuration["locations_filename"]
-        url = self.configuration["url"]
         dataset_name = self.configuration["dataset_names"]["HDX-SIGNALS"]
 
         alerts_file = self.retriever.download_file(
