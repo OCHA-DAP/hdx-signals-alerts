@@ -32,19 +32,53 @@ class HDXSignals:
         container = self.configuration["container"]
         # TODO: move to get this key separately
         key = self.configuration["key"]
-        blob = self.configuration["blob"]
+        blob_dir = self.configuration["blob_dir"]
+        alerts_filename = self.configuration["alerts_filename"]
+        locations_filename = self.configuration["locations_filename"]
         url = self.configuration["url"]
         dataset_name = self.configuration["dataset_names"]["HDX-SIGNALS"]
 
-        downloaded_file = self.retriever.download_file(
+        alerts_file = self.retriever.download_file(
             url=url,
             account=account,
             container=container,
             key=key,
-            blob=blob)
+            blob=blob_dir+alerts_filename)
 
-        data_df = pd.read_csv(downloaded_file, sep=",", escapechar='\\').replace('[“”]', '', regex=True)
-        self.dataset_data[dataset_name] = data_df.apply(lambda x: x.to_dict(), axis=1)
+        locations_file = self.retriever.download_file(
+            url=url,
+            account=account,
+            container=container,
+            key=key,
+            blob=blob_dir+locations_filename)
+
+        data_df_alerts = pd.read_csv(alerts_file, sep=",", escapechar='\\').replace('[“”]', '', regex=True)
+        data_df_locations = pd.read_csv(locations_file, sep=",", escapechar='\\').replace('[“”]', '', regex=True)
+
+        colnames = ['iso3', 'acled_conflict', 'idmc_displacement_conflict',
+                    'idmc_displacement_disaster', 'ipc_food_insecurity', 'jrc_agricultural_hotspots']
+        data_df_locations_subset = data_df_locations[colnames]
+        data_df_locations_subset.rename(columns={'iso3': 'Alpha-3 code'}, inplace=True)
+        lat_lon_file = pd.read_csv("metadata/countries_codes_and_coordinates.csv", sep=",")
+
+        latitude = []
+        longitude = []
+        for iso3 in data_df_locations_subset['Alpha-3 code']:
+            try:
+                lat = lat_lon_file.loc[lat_lon_file['Alpha-3 code'] == iso3, 'Latitude (average)'].iloc[0]
+                lon = lat_lon_file.loc[lat_lon_file['Alpha-3 code'] == iso3, 'Longitude (average)'].iloc[0]
+            except Exception:
+                lat = "NA"
+                lon = "NA"
+            latitude.append(lat)
+            longitude.append(lon)
+
+        data_df_locations_subset['Latitude'] = latitude
+        data_df_locations_subset['Longitude'] = longitude
+        data_df_locations_subset.to_csv("metadata/location_metadata.csv", sep=';', encoding='utf-8', index=False)
+
+        self.dataset_data[dataset_name] = [data_df_alerts.apply(lambda x: x.to_dict(), axis=1),
+                                           data_df_locations.apply(lambda x: x.to_dict(), axis=1)]
 
         # TODO
         # add date logic
@@ -61,7 +95,7 @@ class HDXSignals:
         title = self.configuration["title"]
         update_frequency = self.configuration["update_frequency"]
         dataset = Dataset({"name": slugify(name), "title": title})
-        rows = self.dataset_data[dataset_name]
+        rows = self.dataset_data[dataset_name][0]
         dataset.set_maintainer(self.configuration["maintainer_id"])
         dataset.set_organization(self.configuration["organization_id"])
         dataset.set_expected_update_frequency(update_frequency)

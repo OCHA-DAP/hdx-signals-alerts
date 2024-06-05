@@ -149,13 +149,13 @@ def main(save: bool = False, use_saved: bool = False) -> None:
                     folder = info["folder"]
                     batch = info["batch"]
                     configuration = Configuration.read()
-                    iris = HDXSignals(configuration, retriever, folder, errors)
-                    dataset_names = iris.get_data(state_dict)
+                    signals = HDXSignals(configuration, retriever, folder, errors)
+                    dataset_names = signals.get_data(state_dict)
                     logger.info(f"Number of datasets to upload: {len(dataset_names)}")
 
                     for _, nextdict in progress_storing_folder(info, dataset_names, "name"):
                         dataset_name = nextdict["name"]
-                        dataset = iris.generate_dataset(dataset_name=dataset_name)
+                        dataset = signals.generate_dataset(dataset_name=dataset_name)
                         if dataset:
                             dataset.update_from_yaml()
                             dataset["notes"] = dataset["notes"].replace(
