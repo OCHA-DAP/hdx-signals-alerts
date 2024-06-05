@@ -155,7 +155,7 @@ def main(save: bool = False, use_saved: bool = False) -> None:
 
                     for _, nextdict in progress_storing_folder(info, dataset_names, "name"):
                         dataset_name = nextdict["name"]
-                        dataset = signals.generate_dataset(dataset_name=dataset_name)
+                        dataset, showcase = signals.generate_dataset_and_showcase(dataset_name=dataset_name)
                         if dataset:
                             dataset.update_from_yaml()
                             dataset["notes"] = dataset["notes"].replace(
@@ -172,9 +172,9 @@ def main(save: bool = False, use_saved: bool = False) -> None:
                             except HDXError:
                                 errors.add(f"Could not upload {dataset_name}")
                                 continue
-                            # if showcase:
-                            #     showcase.create_in_hdx()
-                            #     showcase.add_dataset(dataset)
+                            if showcase:
+                                showcase.create_in_hdx()
+                                showcase.add_dataset(dataset)
 
             state.set(state_dict)
 

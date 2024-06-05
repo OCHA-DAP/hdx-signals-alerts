@@ -11,6 +11,7 @@ import logging
 from datetime import datetime
 import pandas as pd
 from hdx.data.dataset import Dataset
+from hdx.data.showcase import Showcase
 from slugify import slugify
 
 
@@ -92,7 +93,7 @@ class HDXSignals:
         else:
             return None
 
-    def generate_dataset(self, dataset_name):
+    def generate_dataset_and_showcase(self, dataset_name):
 
         # Setting metadata and configurations
         name = self.configuration["dataset_names"]["HDX-SIGNALS"]
@@ -169,4 +170,19 @@ class HDXSignals:
             list(rows[0].keys()),
             encoding='utf-8'
         )
-        return dataset
+
+        if not self.configuration["visualization_link"]:
+            return dataset, None
+
+        showcase = Showcase(
+            {
+                "name": f"{slugify(dataset_name)}-showcase",
+                "title": f"{dataset['title']} Showcase",
+                "notes": dataset["notes"],
+                "url": self.configuration["visualization_link"],
+                "image_url": "https://raw.githubusercontent.com/OCHA-DAP/hdx-signals-alerts/main/config/signals_hero.png",
+            }
+        )
+        showcase.add_tags(tags)
+
+        return dataset, showcase
