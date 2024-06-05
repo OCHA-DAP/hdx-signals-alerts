@@ -9,7 +9,7 @@ TODO
 """
 import logging
 import os
-from datetime import datetime
+from datetime import datetime, timezone
 import pandas as pd
 from hdx.data.dataset import Dataset
 from hdx.data.showcase import Showcase
@@ -98,6 +98,7 @@ class HDXSignals:
         self.dataset_data[dataset_name] = [data_df_alerts.apply(lambda x: x.to_dict(), axis=1),
                                            data_df_locations.apply(lambda x: x.to_dict(), axis=1)]
 
+        self.created_date = datetime.fromtimestamp((os.path.getctime(alerts_file)), tz=timezone.utc)
         if self.created_date > state.get(dataset_name, state["DEFAULT"]):
             if self.dataset_data:
                 return [{"name": dataset_name}]
