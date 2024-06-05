@@ -98,10 +98,11 @@ class HDXSignals:
         self.dataset_data[dataset_name] = [data_df_alerts.apply(lambda x: x.to_dict(), axis=1),
                                            data_df_locations.apply(lambda x: x.to_dict(), axis=1)]
 
-        if self.dataset_data:
-            return [{"name": dataset_name}]
-        else:
-            return None
+        if self.created_date > state.get(dataset_name, state["DEFAULT"]):
+            if self.dataset_data:
+                return [{"name": dataset_name}]
+            else:
+                return None
 
     def generate_dataset_and_showcase(self, dataset_name):
 
