@@ -38,13 +38,11 @@ class HDXSignals:
             account = os.environ["STORAGE_ACCOUNT"]
             container = os.environ["CONTAINER"]
             key = os.environ["KEY"]
-            blob_dir = os.environ["BLOB_DIR"]
         except Exception:
             url = self.configuration["url"]
             account = self.configuration["account"]
             container = self.configuration["container"]
             key = self.configuration["key"]
-            blob_dir = self.configuration["blob_dir"]
 
         alerts_filename = self.configuration["alerts_filename"]
         locations_filename = self.configuration["locations_filename"]
@@ -55,7 +53,7 @@ class HDXSignals:
             account=account,
             container=container,
             key=key,
-            blob=blob_dir+alerts_filename)
+            blob=alerts_filename)
 
         data_df_alerts = pd.read_csv(alerts_file, sep=",", escapechar='\\').replace('[“”]', '', regex=True)
         data_df_alerts['date'] = pd.to_datetime(data_df_alerts['date'])
@@ -69,7 +67,7 @@ class HDXSignals:
             account=account,
             container=container,
             key=key,
-            blob=blob_dir+locations_filename)
+            blob=locations_filename)
 
         data_df_locations = pd.read_csv(locations_file, sep=",", escapechar='\\').replace('[“”]', '', regex=True)
 
