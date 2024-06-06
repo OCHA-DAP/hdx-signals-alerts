@@ -33,7 +33,6 @@ jobs:
         BLOB_URL: ${{ secrets.BLOB_URL }}
         STORAGE_ACCOUNT: ${{ secrets.STORAGE_ACCOUNT }}
         CONTAINER: ${{ secrets.CONTAINER }}
-        BLOB_DIR: ${{ secrets.BLOB }}
         KEY: ${{ secrets.KEY }}
       run: |
         python run.py
