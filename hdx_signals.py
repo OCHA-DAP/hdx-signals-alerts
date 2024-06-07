@@ -190,7 +190,7 @@ class HDXSignals:
                 "title": f"{dataset['title']} Showcase",
                 "notes": dataset["notes"],
                 "url": self.configuration["visualization_link"],
-                "image_url": "https://raw.githubusercontent.com/OCHA-DAP/hdx-signals-alerts/main/config/signals_hero.png",
+                "image_url": "https://raw.githubusercontent.com/OCHA-DAP/hdx-signals-alerts/main/config/HDXSignalsLogo_V2.png",
             }
         )
         showcase.add_tags(tags)
