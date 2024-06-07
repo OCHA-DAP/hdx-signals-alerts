@@ -154,7 +154,7 @@ class HDXSignals:
             encoding='utf-8'
         )
 
-        second_filename = "hdx_signals_country_metadata.csv"
+        second_filename = "hdx_signals_location_metadata.csv"
         resource_data = {"name": second_filename,
                          "description": self.configuration["description_locations_file"]}
         rows = self.dataset_data[dataset_name][1]
