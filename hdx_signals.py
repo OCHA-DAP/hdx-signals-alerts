@@ -55,7 +55,7 @@ class HDXSignals:
             key=key,
             blob=alerts_filename)
 
-        data_df_alerts = pd.read_csv(alerts_file, sep=",", escapechar='\\').replace('[“”]', '', regex=True)
+        data_df_alerts = pd.read_csv(alerts_file, sep=",", escapechar='\\', keep_default_na=False).replace('[“”]', '', regex=True)
         data_df_alerts['date'] = pd.to_datetime(data_df_alerts['date'])
 
         # Find the minimum and maximum dates
@@ -69,7 +69,7 @@ class HDXSignals:
             key=key,
             blob=locations_filename)
 
-        data_df_locations = pd.read_csv(locations_file, sep=",", escapechar='\\').replace('[“”]', '', regex=True)
+        data_df_locations = pd.read_csv(locations_file, sep=",", escapechar='\\', keep_default_na=False).replace('[“”]', '', regex=True)
 
         colnames = ['iso3', 'acled_conflict', 'idmc_displacement_conflict',
                     'idmc_displacement_disaster', 'ipc_food_insecurity', 'jrc_agricultural_hotspots']
