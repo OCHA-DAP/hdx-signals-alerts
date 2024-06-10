@@ -40,7 +40,7 @@ jobs:
       if: success()
       uses: stefanzweifel/git-auto-commit-action@v4
       with:
-        file_pattern: "dataset_dates.txt"
+        file_pattern: "metadata/*.csv"
         commit_message: automatic - Data bundle updated
         push_options: "--force"
         skip_dirty_check: false
