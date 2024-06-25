@@ -46,6 +46,7 @@ class HDXSignals:
 
         alerts_filename = self.configuration["alerts_filename"]
         locations_filename = self.configuration["locations_filename"]
+        metadata_filename = self.configuration["metadata_filename"]
         dataset_name = self.configuration["dataset_names"]["HDX-SIGNALS"]
 
         alerts_file = self.retriever.download_file(
@@ -70,6 +71,15 @@ class HDXSignals:
             blob=locations_filename)
 
         data_df_locations = pd.read_csv(locations_file, sep=",", escapechar='\\', keep_default_na=False).replace('[“”]', '', regex=True)
+
+        metadata_file = self.retriever.download_file(
+            url=url,
+            account=account,
+            container=container,
+            key=key,
+            blob=metadata_filename)
+
+        metadata_dict = pd.read_table(metadata_file, sep=",")
 
         colnames = ['iso3', 'acled_conflict', 'idmc_displacement_conflict',
                     'idmc_displacement_disaster', 'ipc_food_insecurity', 'jrc_agricultural_hotspots']
@@ -96,7 +106,8 @@ class HDXSignals:
         data_df_locations_subset.to_csv("metadata/location_metadata.csv", sep=';', encoding='utf-8', index=False)
 
         self.dataset_data[dataset_name] = [data_df_alerts.apply(lambda x: x.to_dict(), axis=1),
-                                           data_df_locations.apply(lambda x: x.to_dict(), axis=1)]
+                                           data_df_locations.apply(lambda x: x.to_dict(), axis=1),
+                                           metadata_dict.apply(lambda x: x.to_dict(), axis=1)]
 
         self.created_date = datetime.fromtimestamp((os.path.getctime(alerts_file)), tz=timezone.utc)
         if self.created_date > state.get(dataset_name, state["DEFAULT"]):
@@ -119,7 +130,7 @@ class HDXSignals:
         dataset.set_subnational(False)
         dataset.add_other_location("world")
         dataset["notes"] = self.configuration["notes"]
-        filename = f"{dataset_name.lower()}.csv"
+        filename = "hdx_signals.csv"
         resource_data = {"name": filename,
                          "description": self.configuration["description_alerts_file"]}
         tags = sorted([t for t in self.configuration["allowed_tags"]])
@@ -177,6 +188,32 @@ class HDXSignals:
         dataset.generate_resource_from_rows(
             self.folder,
             second_filename,
+            rows,
+            resource_data,
+            list(rows[0].keys()),
+            encoding='utf-8'
+        )
+
+        resource_data = {"name": "hdx_signals_data_dictionary.csv",
+                         "description": self.configuration["description_metadata_file"]}
+        rows = self.dataset_data[dataset_name][2]
+        headers = rows[0].keys()
+        date_headers = [h for h in headers if "date" in h.lower() and type(rows[0][h]) == int]
+        for row in rows:
+            for date_header in date_headers:
+                row_date = row[date_header]
+                if not row_date:
+                    continue
+                if len(str(row_date)) > 9:
+                    row_date = row_date / 1000
+                row_date = datetime.utcfromtimestamp(row_date)
+                row_date = row_date.strftime("%Y-%m-%d")
+                row[date_header] = row_date
+
+        rows
+        dataset.generate_resource_from_rows(
+            self.folder,
+            "hdx_signals_data_dictionary.csv",
             rows,
             resource_data,
             list(rows[0].keys()),
