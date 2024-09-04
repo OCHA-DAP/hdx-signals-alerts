@@ -183,7 +183,8 @@ if __name__ == "__main__":
     print()
     facade(
         main,
-        user_agent_config_yaml=join("/Workspace/Shared/init-scripts/useragents.yaml"),
+        user_agent_config_yaml="/Workspace/Shared/init-scripts/.useragents.yaml",
+        hdx_config_yaml="/Workspace/Shared/init-scripts/.hdx_configuration.yaml",
         user_agent_lookup=lookup,
         project_config_yaml=join("config", "project_configuration.yaml"),
 
