@@ -238,7 +238,7 @@ def main(save: bool = False, use_saved: bool = False) -> None:
     """Generate datasets and create them in HDX"""
     with ErrorsOnExit() as errors:
         with State(
-                "dataset_dates.txt",
+                join("dataset_dates.txt"),
                 State.dates_str_to_country_date_dict,
                 State.country_date_dict_to_dates_str,
         ) as state:
