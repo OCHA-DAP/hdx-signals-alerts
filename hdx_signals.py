@@ -102,8 +102,9 @@ class HDXSignals:
         data_df_locations_subset['Latitude'] = latitude
         data_df_locations_subset['Longitude'] = longitude
 
-        data_df_alerts.to_csv("metadata/signals.csv", sep=';', encoding='utf-8', index=False)
-        data_df_locations_subset.to_csv("metadata/location_metadata.csv", sep=';', encoding='utf-8', index=False)
+        #  TODO FIND A WAY TO WRITE THIS TO GIT? OR REMOVE?
+        # data_df_alerts.to_csv("metadata/signals.csv", sep=';', encoding='utf-8', index=False)
+        # data_df_locations_subset.to_csv("metadata/location_metadata.csv", sep=';', encoding='utf-8', index=False)
 
         self.dataset_data[dataset_name] = [data_df_alerts.apply(lambda x: x.to_dict(), axis=1),
                                            data_df_locations.apply(lambda x: x.to_dict(), axis=1),
