@@ -81,7 +81,7 @@ class HDXSignals:
 
         metadata_dict = pd.read_table(metadata_file, sep=",")
 
-        colnames = ['iso3', 'acled_conflict', 'idmc_displacement_conflict',
+        colnames = ['iso3', 'acaps_inform_severity', 'acled_conflict', 'idmc_displacement_conflict',
                     'idmc_displacement_disaster', 'ipc_food_insecurity', 'jrc_agricultural_hotspots']
         data_df_locations_subset = data_df_locations[colnames]
         data_df_locations_subset.rename(columns={'iso3': 'Alpha-3 code'}, inplace=True)
