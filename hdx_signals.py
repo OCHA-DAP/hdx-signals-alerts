@@ -80,16 +80,12 @@ class HDXSignals:
             blob=metadata_filename)
 
         metadata_dict = pd.read_table(metadata_file, sep=",")
-
-        colnames = ['iso3', 'acaps_inform_severity', 'acled_conflict', 'idmc_displacement_conflict',
-                    'idmc_displacement_disaster', 'ipc_food_insecurity', 'jrc_agricultural_hotspots']
-        data_df_locations_subset = data_df_locations[colnames]
-        data_df_locations_subset.rename(columns={'iso3': 'Alpha-3 code'}, inplace=True)
+        data_df_locations.rename(columns={'iso3': 'Alpha-3 code'}, inplace=True)
         lat_lon_file = pd.read_csv("metadata/countries_codes_and_coordinates.csv", sep=",")
 
         latitude = []
         longitude = []
-        for iso3 in data_df_locations_subset['Alpha-3 code']:
+        for iso3 in data_df_locations['Alpha-3 code']:
             if iso3 not in ["CHL", "VNM"]:
                 try:
                     lat = lat_lon_file.loc[lat_lon_file['Alpha-3 code'] == iso3, 'Latitude (average)'].iloc[0]
@@ -98,10 +94,14 @@ class HDXSignals:
                     lat = "NA"
                     lon = "NA"
             else:
-                lat = data_df_locations_subset.loc[data_df_locations_subset['Alpha-3 code'] == iso3, 'lat'].iloc[0]
-                lon = data_df_locations_subset.loc[data_df_locations_subset['Alpha-3 code'] == iso3, 'lon'].iloc[0]
+                lat = data_df_locations.loc[data_df_locations['Alpha-3 code'] == iso3, 'lat'].iloc[0]
+                lon = data_df_locations.loc[data_df_locations['Alpha-3 code'] == iso3, 'lon'].iloc[0]
             latitude.append(lat)
             longitude.append(lon)
+
+        colnames = ['Alpha-3 code', 'acaps_inform_severity', 'acled_conflict', 'idmc_displacement_conflict',
+                    'idmc_displacement_disaster', 'ipc_food_insecurity', 'jrc_agricultural_hotspots']
+        data_df_locations_subset = data_df_locations[colnames]
 
         data_df_locations_subset['Latitude'] = latitude
         data_df_locations_subset['Longitude'] = longitude
