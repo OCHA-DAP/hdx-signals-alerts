@@ -90,14 +90,15 @@ class HDXSignals:
         latitude = []
         longitude = []
         for iso3 in data_df_locations_subset['Alpha-3 code']:
-            try:
-                lat = lat_lon_file.loc[lat_lon_file['Alpha-3 code'] == iso3, 'Latitude (average)'].iloc[0]
-                lon = lat_lon_file.loc[lat_lon_file['Alpha-3 code'] == iso3, 'Longitude (average)'].iloc[0]
-            except Exception:
-                lat = "NA"
-                lon = "NA"
-            latitude.append(lat)
-            longitude.append(lon)
+            if iso3 not in ["CHL", "VNM"]:
+                try:
+                    lat = lat_lon_file.loc[lat_lon_file['Alpha-3 code'] == iso3, 'Latitude (average)'].iloc[0]
+                    lon = lat_lon_file.loc[lat_lon_file['Alpha-3 code'] == iso3, 'Longitude (average)'].iloc[0]
+                except Exception:
+                    lat = "NA"
+                    lon = "NA"
+                latitude.append(lat)
+                longitude.append(lon)
 
         data_df_locations_subset['Latitude'] = latitude
         data_df_locations_subset['Longitude'] = longitude
