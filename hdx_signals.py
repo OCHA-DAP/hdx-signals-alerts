@@ -97,8 +97,11 @@ class HDXSignals:
                 except Exception:
                     lat = "NA"
                     lon = "NA"
-                latitude.append(lat)
-                longitude.append(lon)
+            else:
+                lat = data_df_locations_subset.loc[data_df_locations_subset['Alpha-3 code'] == iso3, 'lat'].iloc[0]
+                lon = data_df_locations_subset.loc[data_df_locations_subset['Alpha-3 code'] == iso3, 'lon'].iloc[0]
+            latitude.append(lat)
+            longitude.append(lon)
 
         data_df_locations_subset['Latitude'] = latitude
         data_df_locations_subset['Longitude'] = longitude
