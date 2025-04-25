@@ -42,7 +42,7 @@ CPV;False;True;False;True;True;False;16.0;-24.0
 CYM;False;True;False;True;False;False;19.5;-80.5
 CAF;True;True;True;True;True;True;7.0;21.0
 TCD;True;True;True;True;True;True;15.0;19.0
-CHL;True;True;False;True;False;False;-35.7;-71.5
+CHL;True;True;False;True;False;False;-30.0;-71.0
 CHN;True;True;False;True;False;False;35.0;105.0
 CXR;False;True;False;False;False;False;-10.5;105.6667
 CCK;False;False;False;False;False;False;-12.5;96.8333
@@ -238,7 +238,7 @@ URY;False;True;False;True;False;False;-33.0;-56.0
 UZB;False;True;False;True;False;True;41.0;64.0
 VUT;False;True;False;True;False;False;-16.0;167.0
 VEN;True;True;True;True;False;False;8.0;-66.0
-VNM;False;True;False;True;False;True;16.6;107.0
+VNM;False;True;False;True;False;True;16.0;106.0
 VGB;False;True;False;False;False;False;18.5;-64.5
 WLF;False;True;False;False;False;False;-13.3;-176.2
 ESH;False;False;False;False;False;False;24.5;-13.0
