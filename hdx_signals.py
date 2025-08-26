@@ -31,7 +31,7 @@ class HDXSignals:
         self.start_date = None
         self.latest_date = None
 
-    def get_data(self, state):
+    def get_data(self):
 
         try:
             url = os.environ["BLOB_URL"]
@@ -106,19 +106,16 @@ class HDXSignals:
         data_df_locations_subset['Latitude'] = latitude
         data_df_locations_subset['Longitude'] = longitude
 
-        data_df_alerts.to_csv("metadata/signals.csv", sep=';', encoding='utf-8', index=False)
-        data_df_locations_subset.to_csv("metadata/location_metadata.csv", sep=';', encoding='utf-8', index=False)
+        #  TODO FIND A WAY TO WRITE THIS TO GIT? OR REMOVE?
+        # data_df_alerts.to_csv("metadata/signals.csv", sep=';', encoding='utf-8', index=False)
+        # data_df_locations_subset.to_csv("metadata/location_metadata.csv", sep=';', encoding='utf-8', index=False)
 
         self.dataset_data[dataset_name] = [data_df_alerts.apply(lambda x: x.to_dict(), axis=1),
                                            data_df_locations.apply(lambda x: x.to_dict(), axis=1),
                                            metadata_dict.apply(lambda x: x.to_dict(), axis=1)]
 
         self.created_date = datetime.fromtimestamp((os.path.getctime(alerts_file)), tz=timezone.utc)
-        if self.created_date > state.get(dataset_name, state["DEFAULT"]):
-            if self.dataset_data:
-                return [{"name": dataset_name}]
-            else:
-                return None
+        return [{"name": dataset_name}]
 
     def generate_dataset_and_showcase(self, dataset_name):
 
