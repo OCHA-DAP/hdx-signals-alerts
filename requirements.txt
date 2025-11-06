@@ -1,7 +1,7 @@
 # DO NOT include azure-functions-worker in this file
 # The Python Worker is managed by Azure Functions platform
 # Manually managing azure-functions-worker may cause unexpected issues
-hdx-python-api==6.4.5
-pandas==2.2.3
+hdx-python-api==6.5.2
+pandas==2.3.3
 slugify~=0.0.1
 azure-functions
