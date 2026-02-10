@@ -5,3 +5,4 @@ hdx-python-api==6.6.0
 pandas==2.3.3
 slugify~=0.0.1
 azure-functions
+setuptools
