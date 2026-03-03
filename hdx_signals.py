@@ -162,7 +162,7 @@ class HDXSignals:
                 row[date_header] = row_date
 
         rows
-        dataset.generate_resource_from_rows(
+        dataset.generate_resource(
             self.folder,
             filename,
             rows,
@@ -189,7 +189,7 @@ class HDXSignals:
                 row[date_header] = row_date
 
         rows
-        dataset.generate_resource_from_rows(
+        dataset.generate_resource(
             self.folder,
             second_filename,
             rows,
@@ -215,7 +215,7 @@ class HDXSignals:
                 row[date_header] = row_date
 
         rows
-        dataset.generate_resource_from_rows(
+        dataset.generate_resource(
             self.folder,
             "hdx_signals_data_dictionary.csv",
             rows,
